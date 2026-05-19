@@ -52,3 +52,70 @@ npm run lock    # 重新加密源码
 # 然后手动混淆: javascript-obfuscator app.js -o app.min.js
 # 提交推送
 ```
+
+## 项目更新日志
+
+### 2026-05-19 17:38:30 +08:00 — 六大板块整合与公网发布
+
+本次已将项目从原 4 个入口整理为 6 个业务板块，并完成 GitHub Pages 公网发布。
+
+#### 当前六大板块
+
+| 板块 | 页面 | 运行脚本 |
+| --- | --- | --- |
+| 外贸跟单 | `index.html` | `order-data.min.js` + `app.min.js` |
+| 海运操作 | `shipping.html` | `shipping-data.min.js` + `shipping.min.js` |
+| 空运操作 | `air.html` | `air-data.min.js` + `air.min.js` |
+| 海运单证 | `docs.html` | `docs-data.min.js` + `docs.min.js` |
+| 空运单证 | `air-docs.html` | `air-docs-data.min.js` + `air-docs.min.js` |
+| 报关操作 | `customs.html` | `customs-data.min.js` + `customs.min.js` |
+
+#### 本次完成内容
+
+- 新增 `air.html` 空运操作板块。
+- 新增 `air-docs.html` 空运单证板块，包含 AWB、MAWB、HAWB、安检、报关、到港和归档流程。
+- 原 `docs.html` 已更名为海运单证。
+- `nav.html` 已整合为六大板块统一导航页，恢复为原来的彩色卡片入口风格。
+- 六个业务板块均已增加或统一语言切换：
+  - 中文
+  - English
+  - 中英双语
+- 语言选择统一保存到浏览器本地键：`foreignTradeTracker.langMode.v1`。
+- `scripts/build.js` 已加入所有新增源码的构建任务。
+- `scripts/crypto.js` 已加入所有新增源码的 AES-256-GCM 加密/解密清单。
+- 已执行构建并生成所有 `.min.js` / `styles.min.css`。
+- 已执行 `npm run lock`，源码已重新加密为 `.enc`。
+- 已提交并推送到 GitHub：`3d41900 Add six-module operations hub`。
+
+#### 公网地址
+
+导航首页：
+
+```text
+https://masonmaiii21-debug.github.io/masondendan/nav.html
+```
+
+各板块地址：
+
+```text
+https://masonmaiii21-debug.github.io/masondendan/index.html
+https://masonmaiii21-debug.github.io/masondendan/shipping.html
+https://masonmaiii21-debug.github.io/masondendan/air.html
+https://masonmaiii21-debug.github.io/masondendan/docs.html
+https://masonmaiii21-debug.github.io/masondendan/air-docs.html
+https://masonmaiii21-debug.github.io/masondendan/customs.html
+```
+
+#### 验证记录
+
+- 本地预览地址 `http://127.0.0.1:8787/nav.html` 已验证 6 个入口正常。
+- 公网地址 `https://masonmaiii21-debug.github.io/masondendan/nav.html` 已验证 6 个入口正常。
+- 公网导航页语言切换已验证存在，选项顺序为：中文 / English / 中英双语。
+- 公网导航页链接均为相对路径，适合 GitHub Pages 或其他静态公网部署。
+
+#### 后续维护提醒
+
+- 编辑源码前运行：`npm run unlock`。
+- 编辑完成后运行：`npm run build`。
+- 最后运行：`npm run lock`。
+- 发布公网前提交并推送到 `origin master`。
