@@ -14,6 +14,12 @@
       .order-follow-page .flow-panel { grid-column: 1 / -1; overflow: hidden; }
       .order-follow-page .progress-chain { display: grid; grid-auto-flow: column; grid-auto-columns: 150px; gap: 10px; overflow-x: auto; padding: 4px 2px 14px; }
       .order-follow-page .chain-node { width: 150px; min-height: 132px; padding: 12px 10px; text-align: left; border-radius: 8px; }
+      .order-follow-page .progress-chain { scroll-behavior: smooth; transition: gap .24s ease; }
+      .order-follow-page .chain-node { transition: width .24s ease, min-height .24s ease, padding .24s ease, box-shadow .2s ease, border-color .2s ease; }
+      .order-follow-page[data-lang="zh"] .progress-chain { grid-auto-columns: 150px; gap: 10px; }
+      .order-follow-page[data-lang="en"] .progress-chain { grid-auto-columns: 184px; gap: 14px; }
+      .order-follow-page[data-lang="bilingual"] .progress-chain { grid-auto-columns: 220px; gap: 16px; }
+      .order-follow-page[data-lang="en"] .chain-node, .order-follow-page[data-lang="bilingual"] .chain-node { width: 100%; min-height: 148px; }
       .order-follow-page .node-stage { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .02em; }
       .order-follow-page .node-name { min-height: 38px; line-height: 1.35; }
       .order-follow-page .node-summary { min-height: 18px; }

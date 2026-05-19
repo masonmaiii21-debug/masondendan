@@ -49,8 +49,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--cs-primary) !imp
 .topbar-actions select { min-height: 34px; width: auto; }
 .customs-app-page .content-grid { grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.8fr); gap: 16px; align-items: start; }
 .customs-app-page .flow-panel { grid-column: 1 / -1; overflow: hidden; }
-.customs-app-page .progress-chain { display: grid; grid-auto-flow: column; grid-auto-columns: 148px; gap: 10px; overflow-x: auto; padding: 4px 2px 14px; }
-.customs-app-page .chain-node { min-height: 128px; width: 148px; padding: 12px 10px; border-radius: 8px; text-align: left; }
+.customs-app-page .progress-chain { display: grid; grid-auto-flow: column; grid-auto-columns: 148px; gap: 10px; overflow-x: auto; padding: 4px 2px 14px; scroll-behavior:smooth; transition:gap .24s ease; }
+.customs-app-page .chain-node { min-height: 128px; width: 148px; padding: 12px 10px; border-radius: 8px; text-align: left; transition:width .24s ease,min-height .24s ease,padding .24s ease,box-shadow .2s ease,border-color .2s ease; }
+.customs-app-page[data-lang="zh"] .progress-chain { grid-auto-columns:148px; gap:10px; }
+.customs-app-page[data-lang="en"] .progress-chain { grid-auto-columns:182px; gap:14px; }
+.customs-app-page[data-lang="bilingual"] .progress-chain { grid-auto-columns:226px; gap:16px; }
+.customs-app-page[data-lang="en"] .chain-node, .customs-app-page[data-lang="bilingual"] .chain-node { width:100%; min-height:146px; }
 .customs-app-page .node-name { min-height: 34px; line-height: 1.35; }
 .customs-app-page .node-summary { min-height: 18px; }
 .customs-app-page .panel { border-radius: 8px; box-shadow: 0 12px 26px rgba(15,23,42,0.06); }

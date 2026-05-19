@@ -30,7 +30,12 @@
 .air-docs-page .flow-panel { grid-column:1 / -1; padding:16px; overflow:hidden; }
 .air-docs-page .activity-panel { grid-column:1 / -1; }
 .air-docs-page .progress-chain { display:grid; grid-auto-flow:column; grid-auto-columns:150px; gap:10px; overflow-x:auto; padding:4px 2px 14px; }
-.air-docs-page .chain-node { width:150px; min-height:128px; padding:10px; background:#fff; text-align:left; }
+.air-docs-page .progress-chain { scroll-behavior:smooth; transition:gap .24s ease; }
+.air-docs-page .chain-node { width:150px; min-height:128px; padding:10px; background:#fff; text-align:left; transition:width .24s ease,min-height .24s ease,padding .24s ease,box-shadow .2s ease,border-color .2s ease; }
+.air-docs-page[data-lang="zh"] .progress-chain { grid-auto-columns:150px; gap:10px; }
+.air-docs-page[data-lang="en"] .progress-chain { grid-auto-columns:188px; gap:14px; }
+.air-docs-page[data-lang="bilingual"] .progress-chain { grid-auto-columns:236px; gap:16px; }
+.air-docs-page[data-lang="en"] .chain-node, .air-docs-page[data-lang="bilingual"] .chain-node { width:100%; min-height:148px; }
 .air-docs-page .chain-node.done { background:var(--air-doc-soft); border-color:rgba(37,99,235,.28); }
 .air-docs-page .chain-node.current { border-color:var(--air-doc-primary); box-shadow:0 0 0 2px rgba(37,99,235,.14); }
 .air-docs-page .chain-node.done .node-dot, .air-docs-page .chain-node.current .node-dot { background:var(--air-doc-primary); }

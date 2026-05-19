@@ -35,11 +35,12 @@
 .shipping-app-page .activity-panel { grid-column:span 2; }
 .shipping-app-page .flow-panel { padding: 16px; }
 .shipping-app-page .section-title h3 { font-size:16px; }
+.shipping-app-page .progress-chain { grid-auto-flow:column; grid-auto-columns:156px; gap:10px; scroll-behavior:smooth; transition:gap .24s ease; }
 .order-item .sub-info { font-size: 10px; color: #9fc3df; margin-top: 2px; display: flex; gap: 8px; }
 .node-summary { font-size: 11px; }
 .chain-node.done .node-dot { background: #246b9f; }
 .chain-node.current { border-color: #246b9f; box-shadow: 0 0 0 2px rgba(36,107,159,0.12); }
-.shipping-app-page .chain-node { min-height: 108px; padding: 9px; background:#fff; }
+.shipping-app-page .chain-node { width:100%; min-height: 108px; padding: 9px; background:#fff; transition:width .24s ease,min-height .24s ease,padding .24s ease,box-shadow .2s ease,border-color .2s ease; }
 .shipping-app-page .chain-node.done { background:#f1f7fb; }
 .shipping-app-page .node-dot { width: 26px; height: 26px; font-size: 13px; }
 .shipping-app-page .node-name { font-size: 13px; }
@@ -56,6 +57,10 @@
 .milestone-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 8px; overflow: hidden; height: 8px; background: var(--surface-soft); }
 .milestone-done { background: #246b9f; height: 100%; transition: width 0.3s; }
 .milestone-problem { background: var(--danger); height: 100%; transition: width 0.3s; }
+.shipping-app-page[data-lang="zh"] .progress-chain { grid-auto-columns:156px; gap:10px; }
+.shipping-app-page[data-lang="en"] .progress-chain { grid-auto-columns:188px; gap:14px; }
+.shipping-app-page[data-lang="bilingual"] .progress-chain { grid-auto-columns:230px; gap:16px; }
+.shipping-app-page[data-lang="en"] .chain-node, .shipping-app-page[data-lang="bilingual"] .chain-node { min-height:132px; }
 @media (max-width:1200px) {
   .shipping-app-page .content-grid { grid-template-columns: 1fr; }
   .shipping-app-page .reminder-panel, .shipping-app-page .activity-panel, .shipping-app-page .flow-panel { grid-column:auto; }
