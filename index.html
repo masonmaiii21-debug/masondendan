@@ -4,7 +4,32 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>外贸跟单记录工具</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles.min.css" />
+    <style>
+      .order-follow-page .workspace { padding: 22px 24px 28px; }
+      .order-follow-page .topbar { align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 16px; }
+      .topbar-actions { display: flex; align-items: center; gap: 10px; }
+      .topbar-actions select { min-height: 34px; width: auto; }
+      .order-follow-page .content-grid { grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.85fr); gap: 16px; align-items: start; }
+      .order-follow-page .flow-panel { grid-column: 1 / -1; overflow: hidden; }
+      .order-follow-page .progress-chain { display: grid; grid-auto-flow: column; grid-auto-columns: 150px; gap: 10px; overflow-x: auto; padding: 4px 2px 14px; }
+      .order-follow-page .chain-node { width: 150px; min-height: 132px; padding: 12px 10px; text-align: left; border-radius: 8px; }
+      .order-follow-page .node-stage { color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .02em; }
+      .order-follow-page .node-name { min-height: 38px; line-height: 1.35; }
+      .order-follow-page .node-summary { min-height: 18px; }
+      .order-work-panel { padding: 18px; }
+      .order-check-grid, .order-exception-grid, .glossary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+      .order-check-grid article, .order-exception-grid article, .glossary-grid span { border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 10px; display: grid; gap: 4px; font-size: 12px; }
+      .order-check-grid small, .order-exception-grid span, .glossary-grid span { color: var(--muted); line-height: 1.45; }
+      .order-exception-grid article.ok { border-color: rgba(23,124,84,0.22); background: #f3faf7; }
+      .order-exception-grid article.warn { border-color: rgba(192,57,43,0.28); background: #fff7f5; }
+      .glossary-title { margin-top: 18px; }
+      .order-node-detail { margin-top: 12px; }
+      @media (max-width: 1100px) {
+        .order-follow-page .content-grid { grid-template-columns: 1fr; }
+        .order-check-grid, .order-exception-grid, .glossary-grid { grid-template-columns: 1fr; }
+      }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script type="module">
       import * as pdfjsLib from "https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.min.mjs";
@@ -12,7 +37,7 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.8.0/mammoth.browser.min.js"></script>
   </head>
-  <body>
+  <body class="order-follow-page">
     <main class="app-shell">
       <aside class="sidebar">
         <div class="brand">
@@ -342,6 +367,7 @@
       </article>
     </template>
 
-    <script src="./app.js"></script>
+    <script src="./order-data.min.js"></script>
+    <script src="./app.min.js"></script>
   </body>
 </html>

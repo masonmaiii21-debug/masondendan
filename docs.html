@@ -3,28 +3,43 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>单证操作管理</title>
-<link rel="stylesheet" href="./styles.css" />
+<title>海运单证管理</title>
+<link rel="stylesheet" href="./styles.min.css" />
 <style>
-:root {
-  --ship-primary: #7b3fa3;
-  --ship-primary-dark: #5e2d7e;
-}
+:root { --ship-primary: #35608a; --ship-primary-dark: #244765; }
+.docs-app-page { background:#f5f7fa; }
+.docs-app-page .app-shell { grid-template-columns:310px 1fr; }
+.docs-app-page .workspace { padding:20px 24px 28px; }
+.docs-app-page .panel { box-shadow:none; border-color:#dbe3ea; }
 .brand-mark { background: var(--ship-primary) !important; }
-.sidebar { background: #1f0d2e !important; }
-.sidebar .order-item.active, .sidebar .order-item:hover { background: rgba(123,63,163,0.45) !important; }
-.sidebar .brand p, .sidebar .order-item small, .sidebar .order-meta { color: #c9a8e0 !important; }
-.sidebar .metric span { color: #c9a8e0 !important; }
+.sidebar { background: #17324a !important; gap:14px; padding:18px; }
+.sidebar .order-item.active, .sidebar .order-item:hover { background: rgba(53,96,138,0.45) !important; }
+.sidebar .brand p, .sidebar .order-item small, .sidebar .order-meta { color: #bdd0e0 !important; }
+.sidebar .metric span { color: #bdd0e0 !important; }
 .primary { border-color: var(--ship-primary) !important; background: var(--ship-primary) !important; }
 .primary:hover { background: var(--ship-primary-dark) !important; }
-input:focus, select:focus, textarea:focus { border-color: var(--ship-primary) !important; box-shadow: 0 0 0 3px rgba(123,63,163,0.12) !important; }
+input:focus, select:focus, textarea:focus { border-color: var(--ship-primary) !important; box-shadow: 0 0 0 3px rgba(53,96,138,0.12) !important; }
 .chain-node.done .node-dot, .chain-node.current .node-dot, .chain-node.checked .node-dot { background: var(--ship-primary) !important; }
-.chain-node.current { border-color: var(--ship-primary) !important; box-shadow: 0 0 0 3px rgba(123,63,163,0.15) !important; }
-.chain-node.done { border-color: rgba(123,63,163,0.42) !important; background: #f5eef8 !important; }
+.chain-node.current { border-color: var(--ship-primary) !important; box-shadow: 0 0 0 2px rgba(53,96,138,0.14) !important; }
+.chain-node.done { border-color: rgba(53,96,138,0.42) !important; background: #f2f7fb !important; }
 .eyebrow { color: var(--ship-primary) !important; }
 #saveHint { color: var(--ship-primary) !important; }
 .node-badge { color: var(--ship-primary-dark) !important; }
 .follow-grid strong { color: var(--ship-primary-dark) !important; }
+.docs-app-page .topbar h2 { font-size:22px; }
+.docs-app-page .content-grid { grid-template-columns:minmax(520px,1fr) 360px; gap:14px; min-width:0; }
+.docs-app-page .flow-panel { padding:16px; min-width:0; overflow:hidden; }
+.docs-app-page .flow-panel, .docs-app-page .activity-panel { grid-column:span 2; }
+.docs-app-page .progress-chain { grid-template-columns:repeat(14, 138px); width:100%; max-width:100%; }
+.docs-app-page .chain-node { min-height:112px; padding:9px; background:#fff; }
+.docs-app-page .node-dot { width:26px; height:26px; font-size:13px; }
+.docs-app-page .node-name { font-size:13px; }
+.docs-app-page .reminder-panel { grid-column:2; grid-row:2; grid-template-columns:1fr; }
+.docs-app-page .reminder-panel > .section-title, .docs-app-page .reminder-panel > .reminder-list, .docs-app-page .reminder-panel > .follow-summary { grid-column:auto; grid-row:auto; }
+.docs-app-page .reminder-panel > .follow-summary { border-top:1px solid var(--line); margin-top:14px; padding-top:14px; }
+.docs-app-page .doc-work-panel { grid-column:2; grid-row:3; padding:20px; }
+.topbar-actions { display:flex; align-items:center; gap:10px; }
+.topbar-actions select { width:128px; }
 .milestone-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 8px; overflow: hidden; height: 8px; background: var(--surface-soft); }
 .milestone-done { background: var(--ship-primary); height: 100%; transition: width 0.3s; }
 .doc-priority { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; padding: 2px 7px; border-radius: 99px; font-weight: 600; }
@@ -39,19 +54,30 @@ input:focus, select:focus, textarea:focus { border-color: var(--ship-primary) !i
 .doc-check-item .doc-badge { font-size: 9px; padding: 2px 6px; border-radius: 99px; margin-left: auto; white-space: nowrap; }
 .doc-check-item .doc-badge.ok { background: #f0e6f7; color: var(--ship-primary); }
 .doc-check-item .doc-badge.wait { background: #fff2d8; color: var(--warning); }
+.consistency-grid { display:grid; gap:8px; }
+.consistency-grid article { border:1px solid var(--line); border-radius:8px; padding:10px; display:grid; gap:4px; background:#fbfdfc; }
+.consistency-grid article.ok { border-color:#b9decf; background:#f4fbf7; }
+.consistency-grid article.warn { border-color:#edd8a8; background:#fffaf0; }
+.consistency-grid span, .glossary-grid span { color:var(--muted); line-height:1.4; }
+.glossary-title { margin-top:18px; }
+.glossary-grid { display:grid; gap:8px; }
+.glossary-grid span { border:1px solid var(--line); border-radius:999px; padding:7px 10px; background:#fbfdfc; font-size:12px; }
+.glossary-grid strong { margin-right:6px; color:var(--ship-primary-dark); }
+@media (max-width:1200px) { .docs-app-page .content-grid { grid-template-columns:1fr; } .docs-app-page .flow-panel, .docs-app-page .activity-panel, .docs-app-page .reminder-panel, .docs-app-page .doc-work-panel { grid-column:auto; grid-row:auto; } }
+@media (max-width:980px) { .docs-app-page .app-shell { grid-template-columns:1fr; } .docs-app-page .workspace, .sidebar { padding:16px; } }
 @media (max-width:1100px) { .doc-check-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
-<body>
+<body class="docs-app-page">
 <main class="app-shell">
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-mark">证</div>
-      <div><h1>单证操作</h1><p>制单 → 审单 → 交单 全流程</p></div>
+      <div><h1>海运单证</h1><p>海运制单 → 审单 → 交单 全流程</p></div>
     </div>
     <div class="metrics" id="metrics"></div>
     <div class="toolbar">
-      <button class="primary" id="newBtn" type="button">+ 新建单证任务</button>
+      <button class="primary" id="newBtn" type="button">+ 新建海运单证</button>
       <button class="ghost" id="exportBtn" type="button" title="导出数据">⇩</button>
       <label class="ghost file-action" title="导入数据">⇧<input id="importInput" type="file" accept="application/json" /></label>
     </div>
@@ -66,19 +92,19 @@ input:focus, select:focus, textarea:focus { border-color: var(--ship-primary) !i
     <header class="topbar">
       <div>
         <p class="eyebrow">工作台</p>
-        <h2 id="pageTitle">选择或新建单证任务</h2>
+        <h2 id="pageTitle">选择或新建海运单证任务</h2>
       </div>
       <button class="danger ghost hidden" id="deleteBtn" type="button">删除任务</button>
     </header>
 
     <section class="panel empty-state" id="emptyState">
-      <div><h2>开始制作第一份单证</h2><p>跟踪每一票货物的全套单证：发票、箱单、提单、产地证、保险单、银行交单。</p><button class="primary" id="emptyNewBtn" type="button">新建单证任务</button></div>
+      <div><h2>开始制作第一份海运单证</h2><p>跟踪每一票海运货物的全套单证：发票、箱单、提单、产地证、保险单、银行交单。</p><button class="primary" id="emptyNewBtn" type="button">新建海运单证任务</button></div>
     </section>
 
     <section class="content-grid hidden" id="editorArea">
       <!-- Progress Chain -->
       <section class="panel flow-panel">
-        <div class="section-title"><h3>单证操作流程</h3><span id="stepProgress"></span></div>
+        <div class="section-title"><h3>海运单证流程</h3><span id="stepProgress"></span></div>
         <div class="milestone-bar"><div class="milestone-done" id="milestoneDone" style="width:0%"></div></div>
         <div class="progress-chain" id="progressChain"></div>
         <div class="node-editor" id="nodeEditor">
@@ -101,7 +127,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--ship-primary) !i
 
       <!-- Task Form - Basic Info -->
       <form class="panel order-form" id="taskForm">
-        <div class="section-title"><h3>单证任务信息</h3><span id="lastUpdated"></span></div>
+        <div class="section-title"><h3>海运单证任务信息</h3><span id="lastUpdated"></span></div>
         <div class="form-grid">
           <label>订单号/合同号<input id="fRef" required autocomplete="off" placeholder="例如 PI-2026-001" /></label>
           <label>状态<select id="fStatus"></select></label>
@@ -183,7 +209,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--ship-primary) !i
   <article class="issue-item"><div><span class="severity"></span><p></p><small></small></div><div class="issue-actions"><button class="ghost close-issue" type="button" title="解决/重开">✓</button><button class="ghost delete-issue" type="button" title="删除问题">×</button></div></article>
 </template>
 
-<script src="./docs.js"></script>
+<script src="./docs-data.min.js"></script>
+<script src="./docs.min.js"></script>
 
 </body>
 </html>

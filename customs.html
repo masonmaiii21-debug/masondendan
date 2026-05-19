@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>报关操作管理</title>
-<link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./styles.min.css" />
 <style>
 :root {
   --cs-primary: #c0392b;
@@ -42,10 +42,41 @@ input:focus, select:focus, textarea:focus { border-color: var(--cs-primary) !imp
 .doc-check-item .doc-badge { font-size: 9px; padding: 2px 6px; border-radius: 99px; white-space: nowrap; }
 .doc-check-item .doc-badge.ok { background: #fef0ed; color: var(--cs-primary); }
 .doc-check-item .doc-badge.wait { background: #fff2d8; color: var(--warning); }
+.customs-app-page .app-shell { min-height: 100vh; background: #f6f8fb; }
+.customs-app-page .workspace { padding: 22px 24px 28px; }
+.customs-app-page .topbar { align-items: center; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 16px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+.topbar-actions select { min-height: 34px; width: auto; }
+.customs-app-page .content-grid { grid-template-columns: minmax(0, 1.6fr) minmax(320px, 0.8fr); gap: 16px; align-items: start; }
+.customs-app-page .flow-panel { grid-column: 1 / -1; overflow: hidden; }
+.customs-app-page .progress-chain { display: grid; grid-auto-flow: column; grid-auto-columns: 148px; gap: 10px; overflow-x: auto; padding: 4px 2px 14px; }
+.customs-app-page .chain-node { min-height: 128px; width: 148px; padding: 12px 10px; border-radius: 8px; text-align: left; }
+.customs-app-page .node-name { min-height: 34px; line-height: 1.35; }
+.customs-app-page .node-summary { min-height: 18px; }
+.customs-app-page .panel { border-radius: 8px; box-shadow: 0 12px 26px rgba(15,23,42,0.06); }
+.customs-app-page .order-form, .customs-app-page .panel[style*="padding:20px"] { padding: 18px !important; }
+.customs-work-panel { padding: 18px; }
+.consistency-grid, .exception-grid, .glossary-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.consistency-grid article, .exception-grid article, .glossary-grid span { border: 1px solid var(--line); background: #fff; border-radius: 7px; padding: 10px; display: grid; gap: 4px; font-size: 12px; }
+.consistency-grid article.ok, .exception-grid article.ok { border-color: rgba(23,124,84,0.22); background: #f3faf7; }
+.consistency-grid article.warn, .exception-grid article.warn { border-color: rgba(192,57,43,0.28); background: #fff7f5; }
+.consistency-grid strong, .exception-grid strong, .glossary-grid strong { color: var(--text); font-size: 12px; }
+.consistency-grid span, .exception-grid span, .glossary-grid span { color: var(--muted); line-height: 1.45; }
+.glossary-title { margin-top: 18px; }
+.customs-doc-check { align-items: stretch; gap: 10px; }
+.customs-doc-check .doc-label { display: grid; gap: 2px; }
+.customs-doc-check .doc-label strong { color: var(--text); }
+.customs-doc-check .doc-label span { color: var(--muted); font-size: 11px; }
+.customs-doc-check select { width: 92px; min-height: 30px; padding: 4px 7px; font-size: 12px; }
+.customs-node-detail { margin-top: 12px; }
 @media (max-width:1100px) { .doc-check-grid { grid-template-columns: 1fr; } }
+@media (max-width:1100px) {
+  .customs-app-page .content-grid { grid-template-columns: 1fr; }
+  .consistency-grid, .exception-grid, .glossary-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
-<body>
+<body class="customs-app-page">
 <main class="app-shell">
   <aside class="sidebar">
     <div class="brand">
@@ -190,7 +221,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--cs-primary) !imp
   <article class="issue-item"><div><span class="severity"></span><p></p><small></small></div><div class="issue-actions"><button class="ghost close-issue" type="button" title="解决/重开">✓</button><button class="ghost delete-issue" type="button" title="删除问题">×</button></div></article>
 </template>
 
-<script src="./customs.js"></script>
+<script src="./customs-data.min.js"></script>
+<script src="./customs.min.js"></script>
 
 </body>
 </html>

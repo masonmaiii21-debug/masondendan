@@ -4,18 +4,47 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>海运操作管理</title>
-<link rel="stylesheet" href="./styles.css" />
+<link rel="stylesheet" href="./styles.min.css" />
 <style>
 /* Shipping-specific overrides */
-.ship-brand-mark { background: #1a6fb5; }
-.ship-sidebar { background: #0d2840; }
-.ship-sidebar .order-item.active, .ship-sidebar .order-item:hover { background: rgba(26,111,181,0.45); }
-.ship-sidebar .brand p, .ship-sidebar .order-item small, .ship-sidebar .order-meta { color: #9fc3df; }
-.ship-sidebar .metric span { color: #9fc3df; }
+.shipping-app-page { background:#f5f7fa; }
+.shipping-app-page .app-shell { grid-template-columns: 310px 1fr; }
+.shipping-app-page .workspace { padding: 20px 24px 28px; }
+.shipping-app-page .panel { box-shadow:none; border-color:#dbe3ea; }
+.shipping-app-page .topbar { margin-bottom: 14px; }
+.shipping-app-page .topbar h2 { font-size: 22px; font-weight: 800; }
+.shipping-app-page .eyebrow { color:#246b9f; }
+.ship-brand-mark { background: #246b9f; }
+.ship-sidebar { gap: 14px; padding: 18px; background: #102f45; }
+.ship-sidebar .brand h1 { font-size: 20px; }
+.ship-sidebar .brand p { font-size: 12px; }
+.ship-sidebar .order-item { min-height: 64px; border-color:rgba(255,255,255,.1); background:rgba(255,255,255,.055); }
+.ship-sidebar .order-item.active, .ship-sidebar .order-item:hover { background: rgba(36,107,159,0.42); }
+.ship-sidebar .brand p, .ship-sidebar .order-item small, .ship-sidebar .order-meta { color: #b6d2e4; }
+.ship-sidebar .metric { padding: 10px; }
+.ship-sidebar .metric strong { font-size: 20px; }
+.ship-sidebar .metric span { color: #b6d2e4; }
+.shipping-app-page .toolbar, .shipping-app-page .filters { gap:8px; }
+.shipping-app-page button, .shipping-app-page .file-action, .shipping-app-page input, .shipping-app-page select, .shipping-app-page textarea { border-radius: 6px; }
+.shipping-app-page .content-grid { grid-template-columns: minmax(520px, 1fr) 360px; gap: 14px; }
+.shipping-app-page .order-form { grid-row: auto; }
+.shipping-app-page .reminder-panel { grid-column: 2; grid-row: 2; grid-template-columns: 1fr; }
+.shipping-app-page .reminder-panel > .section-title, .shipping-app-page .reminder-panel > .reminder-list, .shipping-app-page .reminder-panel > .follow-summary { grid-column: auto; grid-row: auto; }
+.shipping-app-page .reminder-panel > .follow-summary { border-top:1px solid var(--line); margin-top:14px; padding-top:14px; }
+.shipping-app-page .issue-panel, .shipping-app-page .contact-panel { grid-column:auto; }
+.shipping-app-page .activity-panel { grid-column:span 2; }
+.shipping-app-page .flow-panel { padding: 16px; }
+.shipping-app-page .section-title h3 { font-size:16px; }
 .order-item .sub-info { font-size: 10px; color: #9fc3df; margin-top: 2px; display: flex; gap: 8px; }
 .node-summary { font-size: 11px; }
-.chain-node.done .node-dot { background: #1a6fb5; }
-.chain-node.current { border-color: #1a6fb5; box-shadow: 0 0 0 3px rgba(26,111,181,0.15); }
+.chain-node.done .node-dot { background: #246b9f; }
+.chain-node.current { border-color: #246b9f; box-shadow: 0 0 0 2px rgba(36,107,159,0.12); }
+.shipping-app-page .chain-node { min-height: 108px; padding: 9px; background:#fff; }
+.shipping-app-page .chain-node.done { background:#f1f7fb; }
+.shipping-app-page .node-dot { width: 26px; height: 26px; font-size: 13px; }
+.shipping-app-page .node-name { font-size: 13px; }
+.shipping-app-page .node-badge { font-size: 10px; padding: 2px 6px; }
+.shipping-app-page .node-editor { margin-top: 10px; }
 .section-divider { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 8px; }
 .cost-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .cost-table th { background: var(--surface-soft); padding: 8px 10px; text-align: left; font-size: 12px; color: var(--muted); border-bottom: 2px solid var(--line); }
@@ -25,11 +54,19 @@
 .cost-table input, .cost-table select { min-height: 28px; font-size: 12px; padding: 4px 6px; background: transparent; border: none; color: var(--text); width: 100%; }
 .cost-table input:focus, .cost-table select:focus { outline: none; }
 .milestone-bar { display: flex; gap: 0; margin-bottom: 12px; border-radius: 8px; overflow: hidden; height: 8px; background: var(--surface-soft); }
-.milestone-done { background: #1a6fb5; height: 100%; transition: width 0.3s; }
+.milestone-done { background: #246b9f; height: 100%; transition: width 0.3s; }
 .milestone-problem { background: var(--danger); height: 100%; transition: width 0.3s; }
+@media (max-width:1200px) {
+  .shipping-app-page .content-grid { grid-template-columns: 1fr; }
+  .shipping-app-page .reminder-panel, .shipping-app-page .activity-panel, .shipping-app-page .flow-panel { grid-column:auto; }
+}
+@media (max-width:980px) {
+  .shipping-app-page .app-shell { grid-template-columns: 1fr; }
+  .shipping-app-page .workspace, .ship-sidebar { padding:16px; }
+}
 </style>
 </head>
-<body>
+<body class="shipping-app-page">
 <main class="app-shell">
   <aside class="sidebar ship-sidebar">
     <div class="brand">
@@ -55,7 +92,10 @@
         <p class="eyebrow">工作台</p>
         <h2 id="pageTitle">选择或新建海运委托</h2>
       </div>
-      <button class="danger ghost hidden" id="deleteShipBtn" type="button">删除委托</button>
+      <div class="topbar-actions">
+        <a class="secondary doc-nav-button" href="./shipping-documents.html">单证库</a>
+        <button class="danger ghost hidden" id="deleteShipBtn" type="button">删除委托</button>
+      </div>
     </header>
 
     <section class="panel empty-state" id="emptyState">
@@ -64,7 +104,7 @@
 
     <section class="content-grid hidden" id="editorArea">
       <!-- Progress Chain - top full width -->
-      <section class="panel flow-panel">
+      <section class="panel flow-panel shipping-workflow">
         <div class="section-title"><h3>海运操作流程</h3><span id="stepProgress"></span></div>
         <div class="milestone-bar"><div class="milestone-done" id="milestoneDone" style="width:0%"></div><div class="milestone-problem" id="milestoneProblem" style="width:0%"></div></div>
         <div class="progress-chain" id="progressChain"></div>
@@ -149,7 +189,8 @@
   <article class="issue-item"><div><span class="severity"></span><p></p><small></small></div><div class="issue-actions"><button class="ghost close-issue" type="button" title="解决/重开">✓</button><button class="ghost delete-issue" type="button" title="删除问题">×</button></div></article>
 </template>
 
-<script src="./shipping.js"></script>
+<script src="./shipping-data.min.js"></script>
+<script src="./shipping.min.js"></script>
 <!--
 const STEPS = [
   { id:'01', name:'接收委托', desc:'接收客户海运委托书，确认货物信息、船期要求、运价条款' },

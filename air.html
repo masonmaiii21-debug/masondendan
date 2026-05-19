@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>空运操作管理</title>
+<link rel="stylesheet" href="./styles.min.css" />
+<style>
+:root { --air-primary:#0f766e; --air-primary-dark:#115e59; }
+.air-app-page { background:#f5f8fa; }
+.air-app-page .app-shell { grid-template-columns: 310px 1fr; }
+.air-app-page .workspace { padding: 20px 24px 28px; }
+.air-app-page .panel { border-color:#dbe6e9; box-shadow:none; border-radius:8px; }
+.air-app-page .topbar { margin-bottom:14px; align-items:center; }
+.air-app-page .topbar h2 { font-size:22px; font-weight:800; }
+.air-app-page .eyebrow { color:var(--air-primary); }
+.air-brand-mark { background:var(--air-primary); }
+.air-sidebar { gap:14px; padding:18px; background:#123b3d; }
+.air-sidebar .brand h1 { font-size:20px; }
+.air-sidebar .brand p { font-size:12px; color:#b7d9d5; }
+.air-sidebar .metric span, .air-sidebar .order-item small, .air-sidebar .order-meta { color:#b7d9d5; }
+.air-sidebar .order-item { min-height:64px; border-color:rgba(255,255,255,.1); background:rgba(255,255,255,.055); }
+.air-sidebar .order-item.active, .air-sidebar .order-item:hover { background:rgba(15,118,110,.42); }
+.air-app-page .primary { border-color:var(--air-primary); background:var(--air-primary); }
+.air-app-page .primary:hover { background:var(--air-primary-dark); }
+.air-app-page button, .air-app-page .file-action, .air-app-page input, .air-app-page select, .air-app-page textarea { border-radius:6px; }
+.air-app-page input:focus, .air-app-page select:focus, .air-app-page textarea:focus { border-color:var(--air-primary); box-shadow:0 0 0 3px rgba(15,118,110,.12); }
+.air-app-page .content-grid { grid-template-columns:minmax(520px,1fr) 370px; gap:14px; align-items:start; }
+.air-app-page .flow-panel { grid-column:1 / -1; padding:16px; overflow:hidden; }
+.air-app-page .reminder-panel { grid-column:2; grid-row:2; grid-template-columns:1fr; }
+.air-app-page .reminder-panel > .section-title, .air-app-page .reminder-panel > .reminder-list, .air-app-page .reminder-panel > .follow-summary { grid-column:auto; grid-row:auto; }
+.air-app-page .activity-panel { grid-column:1 / -1; }
+.air-app-page .progress-chain { display:grid; grid-auto-flow:column; grid-auto-columns:150px; gap:10px; overflow-x:auto; padding:4px 2px 14px; }
+.air-app-page .chain-node { min-height:128px; width:150px; padding:10px; background:#fff; text-align:left; }
+.air-app-page .chain-node.done { background:#eef9f7; border-color:rgba(15,118,110,.32); }
+.air-app-page .chain-node.current { border-color:var(--air-primary); box-shadow:0 0 0 2px rgba(15,118,110,.12); }
+.air-app-page .chain-node.done .node-dot, .air-app-page .chain-node.current .node-dot { background:var(--air-primary); }
+.air-app-page .node-stage { color:var(--muted); font-size:10px; font-weight:700; }
+.air-app-page .node-name { min-height:38px; line-height:1.35; font-size:12px; }
+.air-app-page .node-summary { min-height:18px; font-size:11px; }
+.milestone-bar { display:flex; margin-bottom:12px; border-radius:8px; overflow:hidden; height:8px; background:var(--surface-soft); }
+.milestone-done { background:var(--air-primary); height:100%; transition:width .3s; }
+.milestone-problem { background:var(--danger); height:100%; transition:width .3s; }
+.order-item .sub-info { font-size:10px; color:#a6d3cf; margin-top:2px; display:flex; gap:8px; }
+.topbar-actions { display:flex; align-items:center; gap:10px; }
+.topbar-actions select { min-height:34px; width:auto; }
+.air-doc-panel, .air-special-panel, .cost-panel { padding:18px; }
+.air-doc-grid, .air-special-grid, .glossary-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.air-doc-item, .air-special-grid article, .glossary-grid span { border:1px solid var(--line); border-radius:7px; background:#fff; padding:10px; display:grid; gap:5px; font-size:12px; }
+.air-doc-item { grid-template-columns:minmax(0,1fr) 92px; align-items:center; }
+.air-doc-item strong, .air-special-grid strong, .glossary-grid strong { color:var(--text); font-size:12px; }
+.air-doc-item span, .air-special-grid span, .glossary-grid span { color:var(--muted); line-height:1.45; }
+.air-doc-item select { min-height:30px; padding:4px 6px; font-size:12px; }
+.air-special-grid article.ok { border-color:rgba(23,124,84,.22); background:#f3faf7; }
+.air-special-grid article.warn { border-color:rgba(192,57,43,.28); background:#fff7f5; }
+.cost-table { width:100%; border-collapse:collapse; font-size:12px; }
+.cost-table th { background:var(--surface-soft); padding:8px 10px; text-align:left; font-size:12px; color:var(--muted); border-bottom:2px solid var(--line); }
+.cost-table td { padding:7px 8px; border-bottom:1px solid var(--line); }
+.cost-table .num { text-align:right; font-variant-numeric:tabular-nums; }
+.cost-table input, .cost-table select { min-height:28px; font-size:12px; padding:4px 6px; background:transparent; border:none; width:100%; }
+.cost-table tfoot td { font-weight:700; color:var(--accent); border-top:2px solid var(--line); }
+.air-node-detail { margin-top:12px; }
+@media (max-width:1200px) {
+  .air-app-page .content-grid { grid-template-columns:1fr; }
+  .air-app-page .reminder-panel, .air-app-page .activity-panel, .air-app-page .flow-panel { grid-column:auto; }
+}
+@media (max-width:980px) {
+  .air-app-page .app-shell { grid-template-columns:1fr; }
+  .air-app-page .workspace, .air-sidebar { padding:16px; }
+  .air-doc-grid, .air-special-grid, .glossary-grid { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body class="air-app-page">
+<main class="app-shell">
+  <aside class="sidebar air-sidebar">
+    <div class="brand">
+      <div class="brand-mark air-brand-mark">空</div>
+      <div><h1>空运操作</h1><p>订舱 → 入仓 → 安检 → 起飞 → 到港</p></div>
+    </div>
+    <div class="metrics" id="metrics"></div>
+    <div class="toolbar">
+      <button class="primary" id="newAirBtn" type="button">+ 新建空运</button>
+      <button class="ghost" id="exportBtn" type="button" title="导出数据">⇩</button>
+      <label class="ghost file-action" title="导入数据">⇧<input id="importInput" type="file" accept="application/json" /></label>
+    </div>
+    <div class="filters">
+      <input id="searchInput" type="search" placeholder="搜索委托号、MAWB、航班、机场" />
+      <select id="statusFilter"><option value="">全部状态</option></select>
+    </div>
+    <div class="order-list" id="airList"></div>
+  </aside>
+
+  <section class="workspace">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">工作台</p>
+        <h2 id="pageTitle">选择或新建空运委托</h2>
+      </div>
+      <div class="topbar-actions">
+        <a class="secondary doc-nav-button" href="./nav.html">返回导航</a>
+        <button class="danger ghost hidden" id="deleteAirBtn" type="button">删除委托</button>
+      </div>
+    </header>
+
+    <section class="panel empty-state" id="emptyState">
+      <div><h2>开始记录第一票空运</h2><p>跟踪空运出口：客户委托、报价、订舱、入仓、安检、报关、交航、起飞、到港与归档。</p><button class="primary" id="emptyNewAirBtn" type="button">新建空运委托</button></div>
+    </section>
+
+    <section class="content-grid hidden" id="editorArea">
+      <section class="panel flow-panel">
+        <div class="section-title"><h3>空运操作流程</h3><span id="stepProgress"></span></div>
+        <div class="milestone-bar"><div class="milestone-done" id="milestoneDone" style="width:0%"></div><div class="milestone-problem" id="milestoneProblem" style="width:0%"></div></div>
+        <div class="progress-chain" id="progressChain"></div>
+        <div class="node-editor" id="nodeEditor">
+          <div><strong id="nodeNoteTitle">步骤备注</strong><p id="nodeNoteMeta"></p></div>
+          <label>操作备注<textarea id="nodeNoteText" rows="3" placeholder="记录该节点的操作详情、航司反馈、异常情况等"></textarea></label>
+          <div class="alarm-picker">
+            <label>月<select id="nodeReminderMonth"></select></label><label>日<select id="nodeReminderDay"></select></label>
+            <label>时<select id="nodeReminderHour"></select></label><label>分<select id="nodeReminderMinute"></select></label>
+          </div>
+          <div class="node-actions"><button class="secondary" id="clearNodeReminderBtn" type="button">清除提醒</button><button class="primary" id="saveNodeNoteBtn" type="button">保存步骤</button></div>
+        </div>
+      </section>
+
+      <section class="panel reminder-panel">
+        <div class="section-title"><h3>提醒</h3><span id="reminderCount"></span></div>
+        <div class="reminder-list" id="reminderList"></div>
+        <div class="follow-summary" id="followSummary"></div>
+      </section>
+
+      <form class="panel order-form" id="airForm">
+        <div class="section-title"><h3>空运委托信息</h3><span id="lastUpdated"></span></div>
+        <div class="form-grid">
+          <label>委托号<input id="fRef" required autocomplete="off" placeholder="例如 AIR-2026-001" /></label>
+          <label>状态<select id="fStatus"></select></label>
+          <label>客户<input id="fCustomer" autocomplete="off" placeholder="客户/公司名称" /></label>
+          <label>发货人<input id="fShipper" autocomplete="off" placeholder="Shipper" /></label>
+          <label>收货人<input id="fConsignee" autocomplete="off" placeholder="Consignee" /></label>
+          <label>起飞机场<input id="fOriginAirport" autocomplete="off" placeholder="例如 SZX / PVG" /></label>
+          <label>目的机场<input id="fDestinationAirport" autocomplete="off" placeholder="例如 LHR / LAX" /></label>
+          <label>航班号<input id="fFlightNo" autocomplete="off" placeholder="例如 CA123" /></label>
+          <label>航空公司<input id="fAirline" autocomplete="off" placeholder="例如 Air China" /></label>
+          <label>订舱号<input id="fBookingNo" autocomplete="off" placeholder="AIRBK20260519001" /></label>
+          <label>MAWB<input id="fMawbNo" autocomplete="off" placeholder="123-45678901" /></label>
+          <label>HAWB<input id="fHawbNo" autocomplete="off" placeholder="SZPT-AIR-0001" /></label>
+          <label>ETD<input id="fEtd" type="datetime-local" /></label>
+          <label>ETA<input id="fEta" type="datetime-local" /></label>
+          <label>件数<input id="fPackages" type="number" placeholder="例如 35" /></label>
+          <label>毛重 KGS<input id="fGrossWeight" type="number" step="0.01" placeholder="例如 520.5" /></label>
+          <label>体积 CBM<input id="fVolumeCbm" type="number" step="0.001" placeholder="例如 3.8" /></label>
+          <label>计费重量 KGS<input id="fChargeableWeight" autocomplete="off" placeholder="可自动按体积重估算" /></label>
+          <label>货物描述<input id="fCargoDescription" autocomplete="off" placeholder="例如 Electronic accessories" /></label>
+          <label>货物类型<select id="fCargoType"><option value="普货">普货</option><option value="危险品">危险品 DG</option><option value="锂电池货">锂电池货</option><option value="温控货">温控货</option><option value="鲜活易腐货">鲜活易腐货</option><option value="超大超重货">超大超重货</option><option value="磁性货">磁性货</option><option value="粉末液体类">粉末液体类</option></select></label>
+          <label>报关状态<input id="fCustomsStatus" autocomplete="off" placeholder="例如 已放行 / 查验中" /></label>
+          <label>当前进度<select id="fStage"></select></label>
+          <label>下一步<input id="fNextAction" autocomplete="off" placeholder="例如 等仓库出称重量尺记录" /></label>
+          <label style="grid-column:span 2;">备注<textarea id="fNotes" rows="3" placeholder="特殊货物要求、航司限制、客户注意事项等"></textarea></label>
+        </div>
+        <div class="form-actions"><button class="primary" type="submit">保存修改</button><span id="saveHint"></span></div>
+      </form>
+
+      <section class="panel air-doc-panel">
+        <div class="section-title"><h3>核心单证清单</h3><span id="docProgress"></span></div>
+        <div class="air-doc-grid" id="docGrid"></div>
+      </section>
+
+      <section class="panel air-special-panel">
+        <div class="section-title"><h3>特殊货物规则</h3><span>Special Cargo Handling</span></div>
+        <div class="air-special-grid" id="specialCargoGrid"></div>
+        <div class="section-title glossary-title"><h3>术语速查</h3><span>Glossary</span></div>
+        <div class="glossary-grid" id="glossaryGrid"></div>
+      </section>
+
+      <section class="panel issue-panel">
+        <div class="section-title"><h3>问题记录</h3><span id="issueCount"></span></div>
+        <form class="issue-form" id="issueForm"><textarea id="issueText" rows="3" placeholder="记录晚入仓、安检不过、航班延误、清关异常等问题"></textarea><div class="issue-controls"><select id="issueSeverity"><option value="一般">一般</option><option value="重要">重要</option><option value="紧急">紧急</option></select><button class="secondary" type="submit">添加问题</button></div></form>
+        <div class="issue-list" id="issueList"></div>
+      </section>
+
+      <section class="panel contact-panel">
+        <div class="section-title"><h3>联系方式</h3><span id="contactCount"></span></div>
+        <form class="contact-form" id="contactForm"><div class="contact-grid">
+          <label>类型<select id="contactRole"><option value="客户">客户</option><option value="航空公司">航空公司</option><option value="空运代理">空运代理</option><option value="仓库">仓库</option><option value="报关行">报关行</option><option value="车队">车队</option><option value="目的港代理">目的港代理</option><option value="其他">其他</option></select></label>
+          <label>姓名/备注<input id="contactNote" autocomplete="off" placeholder="联系人姓名和备注" /></label>
+          <label>电话<input id="contactPhone" autocomplete="off" inputmode="tel" placeholder="例如 13800000000" /></label>
+          <label>邮箱<input id="contactEmail" autocomplete="off" inputmode="email" placeholder="name@example.com" /></label>
+        </div><button class="secondary" type="submit">添加联系人</button></form>
+        <div class="contact-list" id="contactList"></div>
+      </section>
+
+      <section class="panel cost-panel">
+        <div class="section-title"><h3>费用明细</h3><button class="secondary small" id="addCostBtn" type="button">+ 添加</button></div>
+        <table class="cost-table"><thead><tr><th>费用项目</th><th>币种</th><th>单价</th><th>数量</th><th>金额</th><th></th></tr></thead><tbody id="costBody"></tbody><tfoot id="costFoot"></tfoot></table>
+      </section>
+
+      <section class="panel activity-panel"><div class="section-title"><h3>更新记录</h3><span id="activityCount"></span></div><div class="activity-list" id="activityList"></div></section>
+    </section>
+  </section>
+</main>
+
+<template id="airItemTemplate">
+  <button class="order-item" type="button"><span class="order-main"><strong></strong><small></small><span class="sub-info"></span></span><span class="order-meta"></span></button>
+</template>
+<template id="issueTemplate">
+  <article class="issue-item"><div><span class="severity"></span><p></p><small></small></div><div class="issue-actions"><button class="ghost close-issue" type="button" title="解决/重开">✓</button><button class="ghost delete-issue" type="button" title="删除问题">×</button></div></article>
+</template>
+
+<script src="./air-data.min.js"></script>
+<script src="./air.min.js"></script>
+</body>
+</html>

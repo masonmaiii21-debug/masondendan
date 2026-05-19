@@ -5,7 +5,7 @@ const readline = require("readline");
 
 const ROOT = path.resolve(__dirname, "..");
 const KEY_FILE = path.join(ROOT, ".crypto-key");
-const FILES = ["app.js", "styles.css", "shipping.js", "docs.js", "customs.js"];
+const FILES = ["order-data.js", "app.js", "styles.css", "shipping-data.js", "shipping.js", "shipping-documents.js", "air-data.js", "air.js", "air-docs-data.js", "air-docs.js", "docs-data.js", "docs.js", "customs-data.js", "customs.js"];
 
 function ask(question) {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });

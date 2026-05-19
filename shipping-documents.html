@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>海运单证库</title>
+<link rel="stylesheet" href="./styles.min.css" />
+</head>
+<body class="shipping-doc-page">
+<main class="doc-library-shell">
+  <header class="doc-library-hero">
+    <div>
+      <p class="eyebrow">海运操作 · 单证库</p>
+      <h1>节点关联单证</h1>
+      <p>按海运出口流程反查单证用途、出现节点、相关主体和操作检查点。</p>
+    </div>
+    <div class="doc-hero-actions">
+      <a class="secondary doc-nav-button" href="./shipping.html">返回海运操作</a>
+      <a class="ghost doc-nav-button" href="./nav.html">返回首页</a>
+    </div>
+  </header>
+
+  <section class="panel doc-context-panel" id="nodeContext"></section>
+
+  <section class="panel doc-library-toolbar">
+    <div class="doc-search-row">
+      <input id="docSearch" type="search" placeholder="搜索单证、用途、节点、主体" />
+      <select id="stageFilter"><option value="">全部阶段</option></select>
+      <select id="categoryFilter"><option value="">全部分类</option></select>
+    </div>
+    <div class="doc-filter-row">
+      <label class="doc-filter-toggle"><input id="nodeOnlyFilter" type="checkbox" /> 只看当前节点单证</label>
+      <button class="secondary doc-reset-button" id="resetFilters" type="button">清除筛选</button>
+    </div>
+    <div class="doc-library-stats" id="docStats"></div>
+  </section>
+
+  <section class="doc-library-grid">
+    <div class="panel doc-card-list" id="docList"></div>
+    <article class="panel doc-detail-panel" id="docDetail"></article>
+  </section>
+
+  <section class="panel exception-library">
+    <div class="section-title"><h3>异常处理索引</h3><span>原因 · 影响 · 处理 · 关联单证</span></div>
+    <div class="exception-grid" id="exceptionGrid"></div>
+  </section>
+</main>
+
+<script src="./shipping-data.min.js"></script>
+<script src="./shipping-documents.min.js"></script>
+</body>
+</html>
