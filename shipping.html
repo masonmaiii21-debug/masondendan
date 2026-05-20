@@ -26,14 +26,14 @@
 .ship-sidebar .metric span { color: #b6d2e4; }
 .shipping-app-page .toolbar, .shipping-app-page .filters { gap:8px; }
 .shipping-app-page button, .shipping-app-page .file-action, .shipping-app-page input, .shipping-app-page select, .shipping-app-page textarea { border-radius: 6px; }
-.shipping-app-page .content-grid { grid-template-columns: minmax(520px, 1fr) 360px; gap: 14px; }
+.shipping-app-page .content-grid { grid-template-columns: minmax(520px, 1fr) 360px; gap: 14px; min-width:0; }
 .shipping-app-page .order-form { grid-row: auto; }
 .shipping-app-page .reminder-panel { grid-column: 2; grid-row: 2; grid-template-columns: 1fr; }
 .shipping-app-page .reminder-panel > .section-title, .shipping-app-page .reminder-panel > .reminder-list, .shipping-app-page .reminder-panel > .follow-summary { grid-column: auto; grid-row: auto; }
 .shipping-app-page .reminder-panel > .follow-summary { border-top:1px solid var(--line); margin-top:14px; padding-top:14px; }
 .shipping-app-page .issue-panel, .shipping-app-page .contact-panel { grid-column:auto; }
 .shipping-app-page .activity-panel { grid-column:span 2; }
-.shipping-app-page .flow-panel { padding: 16px; }
+.shipping-app-page .flow-panel { padding: 16px; min-width:0; overflow:hidden; }
 .shipping-app-page .section-title h3 { font-size:16px; }
 .shipping-app-page .progress-chain { display:grid; grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:156px; gap:10px; scroll-behavior:smooth; transition:gap .24s ease; }
 .order-item .sub-info { font-size: 10px; color: #9fc3df; margin-top: 2px; display: flex; gap: 8px; }
@@ -68,6 +68,12 @@
 @media (max-width:980px) {
   .shipping-app-page .app-shell { grid-template-columns: 1fr; }
   .shipping-app-page .workspace, .ship-sidebar { padding:16px; }
+}
+@media (max-width:760px) {
+  .shipping-app-page .content-grid { grid-template-columns:minmax(0,1fr); min-width:0; }
+  .shipping-app-page .topbar-actions { width:100%; flex-wrap:wrap; }
+  .shipping-app-page .topbar-actions > * { flex:1 1 140px; }
+  .shipping-app-page .cost-panel { overflow-x:auto; }
 }
 </style>
 </head>

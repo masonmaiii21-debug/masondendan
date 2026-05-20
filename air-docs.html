@@ -27,7 +27,7 @@
 .topbar-actions { display:flex; align-items:center; gap:10px; }
 .topbar-actions select { width:128px; min-height:34px; }
 .air-docs-page .content-grid { grid-template-columns:minmax(520px,1fr) 370px; gap:14px; align-items:start; min-width:0; }
-.air-docs-page .flow-panel { grid-column:1 / -1; padding:16px; overflow:hidden; }
+.air-docs-page .flow-panel { grid-column:1 / -1; padding:16px; overflow:hidden; min-width:0; }
 .air-docs-page .activity-panel { grid-column:1 / -1; }
 .air-docs-page .progress-chain { display:grid; grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:150px; gap:10px; overflow-x:auto; padding:4px 2px 14px; }
 .air-docs-page .progress-chain { scroll-behavior:smooth; transition:gap .24s ease; }
@@ -54,7 +54,7 @@
 .doc-check-item { grid-template-columns:minmax(0,1fr) 94px; align-items:center; }
 .doc-check-item strong, .validation-grid strong, .exception-grid strong { font-size:12px; color:var(--text); }
 .doc-check-item span, .validation-grid span, .exception-grid span, .glossary-grid span { color:var(--muted); line-height:1.45; }
-.doc-check-item select { min-height:30px; padding:4px 6px; font-size:12px; }
+.doc-check-item select { min-height:38px; padding:6px 8px; font-size:12px; }
 .validation-grid article.ok { border-color:#b7dfc8; background:#f4fbf7; }
 .validation-grid article.warn { border-color:#efc3bc; background:#fff7f5; }
 .glossary-title { margin-top:18px; }
@@ -70,6 +70,11 @@
   .air-docs-page .app-shell { grid-template-columns:1fr; }
   .air-docs-page .workspace, .air-docs-sidebar { padding:16px; }
   .node-detail, .air-doc-grid, .validation-grid, .exception-grid, .glossary-grid { grid-template-columns:1fr; }
+}
+@media (max-width:760px) {
+  .air-docs-page .content-grid { grid-template-columns:minmax(0,1fr); min-width:0; }
+  .air-docs-page .topbar-actions { width:100%; flex-wrap:wrap; }
+  .air-docs-page .topbar-actions > * { flex:1 1 140px; }
 }
 </style>
 </head>
